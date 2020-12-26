@@ -1,0 +1,42 @@
+{
+  "generator-jhipster": {
+    "promptValues": {
+      "packageName": "tr.com.tumed",
+      "nativeLanguage": "tr"
+    },
+    "jhipsterVersion": "6.10.5",
+    "applicationType": "monolith",
+    "baseName": "tumed",
+    "packageName": "tr.com.tumed",
+    "packageFolder": "tr/com/tumed",
+    "serverPort": "8080",
+    "authenticationType": "jwt",
+    "cacheProvider": "no",
+    "websocket": false,
+    "databaseType": "sql",
+    "devDatabaseType": "h2Disk",
+    "prodDatabaseType": "mssql",
+    "searchEngine": false,
+    "messageBroker": false,
+    "serviceDiscoveryType": false,
+    "buildTool": "maven",
+    "enableSwaggerCodegen": false,
+    "jwtSecretKey": "ZWIxNzUyMDE3YjQ3YjI4Y2FjYWM4MzI5OTdhZTVmNmU4ZTA4YmRiMzcyZDY5MzkyY2QyMDRmZDA1Y2FkZTZmMDEyNWM3Yzc0NTZmYWY5NjU5NDI1YTI5YTZiMjczZGNiZDYyMGEwMmNmNTQzYzFiNzViZDJkZDUyZTA3MTJhZGY=",
+    "embeddableLaunchScript": false,
+    "useSass": true,
+    "clientPackageManager": "npm",
+    "clientFramework": "angularX",
+    "clientTheme": "none",
+    "clientThemeVariant": "",
+    "creationTimestamp": 1609012446219,
+    "testFrameworks": [],
+    "jhiPrefix": "jhi",
+    "entitySuffix": "",
+    "dtoSuffix": "DTO",
+    "otherModules": [],
+    "enableTranslation": true,
+    "nativeLanguage": "tr",
+    "languages": ["tr"],
+    "blueprints": []
+  }
+}
