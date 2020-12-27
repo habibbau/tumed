@@ -1,0 +1,406 @@
+<header class="topbar">
+    <!--Uygulamadan cıkıs yaparken acılacak olan modalı cizen html template-->
+    <ng-template #contentLogout let-modal>
+        <div class="modal-header">
+            <div class="col-sm-12 col-md-12 col-xs-12 text-center">
+                <img src="/content/images/his_modal.png" alt="">
+            </div>
+        </div>
+        <div class="modal-body text-center">
+            <p>Çıkış yapmak istediğinize emin misiniz ?</p>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-info btn-circle btn-sm" type="button" (click)="logout()">
+                <i class="fa fa-check"></i>
+            </button>
+            <button class="btn btn-danger btn-circle btn-sm" type="button" (click)="modal.dismiss('Cross click')">
+                <i class="fa fa-times"></i>
+            </button>
+        </div>
+    </ng-template>
+    <!--Hesap ayarları modalının cizecek olan html template-->
+    <ng-template #contentSetting let-modal>
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="alert alert-success" *ngIf="success">
+                    <strong>Ayarlar kaydedildi!</strong>
+                </div>
+                <jhi-alert-error></jhi-alert-error>
+
+                <form name="form" role="form" (ngSubmit)="save()" [formGroup]="settingsForm"
+                      *ngIf="settingsForm.get('login').value" novalidate>
+
+                    <div class="form-group">
+                        <label class="form-control-label" for="firstName">İsim</label>
+                        <input type="text" class="form-control" id="firstName" name="firstName"
+                               placeholder="İsminiz"
+                               formControlName="firstName">
+                        <div
+                            *ngIf="settingsForm.get('firstName').invalid && (settingsForm.get('firstName').dirty || settingsForm.get('firstName').touched)">
+                            <small class="form-text text-danger"
+                                   *ngIf="settingsForm.get('firstName').errors.required">
+                                İsim zorunludur.
+                            </small>
+                            <small class="form-text text-danger"
+                                   *ngIf="settingsForm.get('firstName').errors.minlength">
+                                İsim en az 1 karakter olmalıdır.
+                            </small>
+                            <small class="form-text text-danger"
+                                   *ngIf="settingsForm.get('firstName').errors.maxlength">
+                                İsim 50 karakterden uzun olamaz.
+                            </small>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control-label" for="lastName">Soyisim</label>
+                        <input type="text" class="form-control" id="lastName" name="lastName"
+                               placeholder="Soyisminiz"
+                               formControlName="lastName">
+                        <div
+                            *ngIf="settingsForm.get('lastName').invalid && (settingsForm.get('lastName').dirty || settingsForm.get('lastName').touched)">
+                            <small class="form-text text-danger"
+                                   *ngIf="settingsForm.get('lastName').errors.required">
+                                Soyisim zorunludur.
+                            </small>
+                            <small class="form-text text-danger"
+                                   *ngIf="settingsForm.get('lastName').errors.minlength">
+                                Soyisim en az 1 karakter olmalıdır.
+                            </small>
+                            <small class="form-text text-danger"
+                                   *ngIf="settingsForm.get('lastName').errors.maxlength">
+                                Soyisim 50 karakterden uzun olamaz.
+                            </small>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control-label" for="email">E-posta</label>
+                        <input type="email" class="form-control" id="email" name="email"
+                               placeholder="E-posta Adresiniz"
+                               formControlName="email">
+                        <div
+                            *ngIf="settingsForm.get('email').invalid && (settingsForm.get('email').dirty || settingsForm.get('email').touched)">
+                            <small class="form-text text-danger"
+                                   *ngIf="settingsForm.get('email').errors.required">
+                                E-posta Zorunludur.
+                            </small>
+                            <small class="form-text text-danger"
+                                   *ngIf="settingsForm.get('email').errors.email">
+                                E-posta alanı uygun değil.
+                            </small>
+                            <small class="form-text text-danger"
+                                   *ngIf="settingsForm.get('email').errors.minlength">
+                                E-postanız en az 5 karakter olmalı.
+                            </small>
+                            <small class="form-text text-danger"
+                                   *ngIf="settingsForm.get('email').errors.maxlength">
+                                E-postanız 100 karakterden uzun olamaz.
+                            </small>
+                        </div>
+                    </div>
+                    <button type="submit" [disabled]="settingsForm.invalid" class="btn btn-primary">Save
+                    </button>
+                </form>
+            </div>
+        </div>
+    </ng-template>
+
+    <nav class="navbar top-navbar navbar-expand-md navbar-light">
+        <!-- ============================================================== -->
+        <!-- Logo -->
+        <!-- ============================================================== -->
+        <div class="navbar-header">
+            <a class="navbar-brand" href="index.html">
+                <b>
+                    <img src="/content/images/his_modal.png" alt="homepage" class="dark-logo"/>
+                </b>
+            </a>
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Logo -->
+        <!-- ============================================================== -->
+        <div class="navbar-collapse">
+            <!-- ============================================================== -->
+            <!-- toggle and nav items -->
+            <!-- ============================================================== -->
+            <ul class="navbar-nav mr-auto mt-md-0">
+                <!-- This is  -->
+                <li class="nav-item m-l-10">
+                    <a class="nav-link sidebartoggler text-muted waves-effect waves-dark" href="javascript:void(0)">
+                        <i class="ti-menu"></i>
+                    </a>
+                </li>
+                <!-- ============================================================== -->
+                <!-- Comment -->
+                <!-- ============================================================== -->
+                <li class="nav-item dropdown" ngbDropdown>
+                    <a ngbDropdownToggle class="nav-link text-muted text-muted waves-effect waves-dark"
+                       href="javascript:void(0)">
+                        <i class="mdi mdi-message"></i>
+                        <div class="notify">
+                            <span class="heartbit"></span>
+                            <span class="point"></span>
+                        </div>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right mailbox animated slideInDown" ngbDropdownMenu>
+                        <ul>
+                            <li>
+                                <div class="drop-title">Notifications</div>
+                            </li>
+                            <li>
+                                <!--<div class="message-center" [perfectScrollbar]="config">-->
+                                <!--    &lt;!&ndash; Message &ndash;&gt;-->
+                                <!--    <a href="#" *ngFor="let notification of notifications">-->
+                                <!--        <div class="round {{notification.round}}">-->
+                                <!--            <i class="{{notification.icon}}"></i>-->
+                                <!--        </div>-->
+                                <!--        <div class="mail-contnet">-->
+                                <!--            <h5>{{notification.title}}</h5>-->
+                                <!--            <span class="mail-desc">{{notification.subject}}</span>-->
+                                <!--            <span class="time">{{notification.time}}</span>-->
+                                <!--        </div>-->
+                                <!--    </a>-->
+                                <!--</div>-->
+                            </li>
+                            <li>
+                                <a class="nav-link text-center" href="javascript:void(0);">
+                                    <strong>Check all notifications</strong>
+                                    <i class="fa fa-angle-right"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <!-- ============================================================== -->
+                <!-- End Comment -->
+                <!-- ============================================================== -->
+                <!-- ============================================================== -->
+                <!-- Messages -->
+                <!-- ============================================================== -->
+                <li class="nav-item dropdown" ngbDropdown>
+                    <a ngbDropdownToggle class="nav-link text-muted waves-effect waves-dark" href="javascript:void(0)">
+                        <i class="mdi mdi-email"></i>
+                        <div class="notify">
+                            <span class="heartbit"></span>
+                            <span class="point"></span>
+                        </div>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right mailbox animated bounceInDown" ngbDropdownMenu>
+                        <ul>
+                            <li>
+                                <div class="drop-title">You have 4 new messages</div>
+                            </li>
+                            <li>
+                                <!--<div class="message-center" [perfectScrollbar]="config">-->
+                                <!--    <a href="#" *ngFor="let mymessage of mymessages">-->
+                                <!--        <div class="user-img">-->
+                                <!--            <img src="{{mymessage.useravatar}}" alt="user" class="img-circle"-->
+                                <!--                 width="40">-->
+                                <!--            <span class="profile-status {{mymessage.status}} pull-right"></span>-->
+                                <!--        </div>-->
+                                <!--        <div class="mail-contnet">-->
+                                <!--            <h5>{{mymessage.from}}</h5>-->
+                                <!--            <span class="mail-desc">{{mymessage.subject}}</span>-->
+                                <!--            <span class="time">{{mymessage.time}}</span>-->
+                                <!--        </div>-->
+                                <!--    </a>-->
+                                <!--</div>-->
+                            </li>
+                            <li>
+                                <a class="nav-link text-center" href="javascript:void(0);">
+                                    <strong>See all e-Mails</strong>
+                                    <i class="fa fa-angle-right"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <!-- ============================================================== -->
+                <!-- End Messages -->
+                <!-- ============================================================== -->
+                <!-- ============================================================== -->
+                <!-- Messages -->
+                <!-- ============================================================== -->
+                <li class="nav-item dropdown mega-dropdown" ngbDropdown [autoClose]="false">
+                    <a ngbDropdownToggle class="nav-link text-muted waves-effect waves-dark" href="javascript:void(0)">
+                        <i class="mdi mdi-view-grid"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right animated bounceInDown" ngbDropdownMenu>
+                        <ul class="mega-dropdown-menu row">
+                            <li class="col-lg-3 col-xlg-2 m-b-30">
+                                <h4 class="m-b-20">CAROUSEL</h4>
+                                <!-- CAROUSEL -->
+                                <ngb-carousel>
+                                    <ng-template ngbSlide>
+                                        <!--<img src="/content/assets/images/big/img1.jpg" class="img-responsive"-->
+                                        alt="Random first slide">
+                                        <div class="carousel-caption">
+                                            <h3 class="text-white font-bold">First slide label</h3>
+
+                                        </div>
+                                    </ng-template>
+                                    <ng-template ngbSlide>
+                                        <!--<img src="/content/assets/images/big/img2.jpg" class="img-responsive"-->
+                                        alt="Random second slide">
+                                        <div class="carousel-caption">
+                                            <h3 class="text-white font-bold">Second slide label</h3>
+
+                                        </div>
+                                    </ng-template>
+                                    <ng-template ngbSlide>
+                                        <!--<img src="/content/assets/images/big/img3.jpg" class="img-responsive"-->
+                                        alt="Random third slide">
+                                        <div class="carousel-caption">
+                                            <h3 class="text-white font-bold">Third slide label</h3>
+
+                                        </div>
+                                    </ng-template>
+                                </ngb-carousel>
+                                <!-- End CAROUSEL -->
+
+                            </li>
+                            <li class="col-lg-3 m-b-30">
+                                <h4 class="m-b-20">ACCORDION</h4>
+                                <!-- Accordian -->
+                                <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0"
+                                               class="accordion nav-accordion">
+                                    <ngb-panel title="Simple">
+                                        <ng-template ngbPanelContent>
+                                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry
+                                            richardson ad squid.
+                                        </ng-template>
+                                    </ngb-panel>
+                                    <ngb-panel>
+                                        <ng-template ngbPanelTitle>
+                                            <span>&#9733;
+                                                <b>Fancy</b> title &#9733;</span>
+                                        </ng-template>
+                                        <ng-template ngbPanelContent>
+                                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry
+                                            richardson ad squid.
+                                        </ng-template>
+                                    </ngb-panel>
+                                    <ngb-panel title="Disabled" [disabled]="true">
+                                        <ng-template ngbPanelContent>
+                                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry
+                                            richardson ad squid.
+                                        </ng-template>
+                                    </ngb-panel>
+                                </ngb-accordion>
+                            </li>
+
+
+                            <li class="col-lg-3  m-b-30">
+                                <h4 class="m-b-20">CONTACT US</h4>
+                                <!-- Contact -->
+                                <form>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="exampleInputname1"
+                                               placeholder="Enter Name"></div>
+                                    <div class="form-group">
+                                        <input type="email" class="form-control" placeholder="Enter email"></div>
+                                    <div class="form-group">
+                                        <textarea class="form-control" id="exampleTextarea" rows="3"
+                                                  placeholder="Message"></textarea>
+                                    </div>
+                                    <button type="submit" class="btn btn-info">Submit</button>
+                                </form>
+                            </li>
+                            <li class="col-lg-3 col-xlg-4 m-b-30">
+                                <h4 class="m-b-20">List style</h4>
+                                <!-- List style -->
+                                <ul class="list-style-none">
+                                    <li>
+                                        <a href="javascript:void(0)">
+                                            <i class="fa fa-check text-success"></i> You can give link</a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0)">
+                                            <i class="fa fa-check text-success"></i> Give link</a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0)">
+                                            <i class="fa fa-check text-success"></i> Another Give link</a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0)">
+                                            <i class="fa fa-check text-success"></i> Forth link</a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0)">
+                                            <i class="fa fa-check text-success"></i> Another fifth link</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <!-- ============================================================== -->
+                <!-- End Messages -->
+                <!-- ============================================================== -->
+            </ul>
+            <!-- ============================================================== -->
+            <!-- User profile and search -->
+            <!-- ============================================================== -->
+            <ul class="navbar-nav my-lg-0">
+                <!-- ============================================================== -->
+                <!-- Profile -->
+                <!-- ============================================================== -->
+                <li class="nav-item dropdown" ngbDropdown placement="bottom-right">
+                    <a ngbDropdownToggle class="nav-link dropdown-toggle text-muted waves-effect waves-dark"
+                       href="javascript:void(0)" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false">
+                        <img src="/content/images/users/ben.jpg" alt="user" class="profile-pic"/>
+                    </a>
+                    <div class="dropdown-menu-profile dropdown-menu-right animated flipInY" ngbDropdownMenu>
+                        <ul class="dropdown-user">
+                            <li>
+                                <div class="dw-user-box">
+                                    <div class="row">
+                                        <div class="col-md-3 col-xs-12">
+                                            <div class="u-img">
+                                                <img src="/content/images/users/ben.jpg" alt="user">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-8 col-xs-12">
+                                            <div class="u-text">
+                                                <h4 *ngIf="account">{{account.firstName + ' ' + account.lastName}}</h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="u-text">
+                                            <p class="text-muted" *ngIf="account">{{account.email}}</p>
+                                            <a href="" class="btn btn-rounded btn-danger btn-sm">Profilin Görüntüle</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li role="separator" class="divider"></li>
+                            <li>
+                                <a href="#">
+                                    <i class="ti-wallet"></i> Profilim</a>
+                            </li>
+                            <li>
+                                <a href="#" routerLink="password" routerLinkActive="active">
+                                    <i class="mdi mdi-account-key"></i> Şifre Yenileme</a>
+                            </li>
+                            <li role="separator" class="divider"></li>
+                            <!--Hesap Ayarları-->
+                            <li >
+                                <a href="#" routerLink="settings" routerLinkActive="active">
+                                    <i class="ti-settings"></i> Hesap Ayarları</a>
+                            </li>
+                            <!--Çıkış Yap-->
+                            <!--<li role="separator" class="divider"></li>-->
+                            <!--<li (click)="logoutModal(contentLogout)">-->
+                            <!--    <a href="">-->
+                            <!--        <i class="fa fa-power-off"></i> Çıkış Yap-->
+                            <!--    </a>-->
+                            <!--</li>-->
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>

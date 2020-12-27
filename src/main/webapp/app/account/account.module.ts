@@ -11,15 +11,16 @@ import { PasswordResetInitComponent } from './password-reset/init/password-reset
 import { PasswordResetFinishComponent } from './password-reset/finish/password-reset-finish.component';
 import { SettingsComponent } from './settings/settings.component';
 import { accountState } from './account.route';
+import { TumedSharedCommonModule } from '../shared';
 
 @NgModule({
-  imports: [TumedSharedModule, RouterModule.forChild(accountState)],
+  imports: [TumedSharedModule, RouterModule.forChild(accountState), TumedSharedCommonModule],
   declarations: [
     ActivateComponent,
     RegisterComponent,
     PasswordComponent,
     PasswordStrengthBarComponent,
-    PasswordResetInitComponent,
+    // PasswordResetInitComponent,
     PasswordResetFinishComponent,
     SettingsComponent,
   ],

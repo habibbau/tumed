@@ -10,7 +10,8 @@
       "schematics": {
         "@schematics/angular:component": {
           "skipTests": true,
-          "style": "scss"
+          "style": "scss",
+          "styleext": "scss"
         },
         "@schematics/angular:directive": {
           "skipTests": true
@@ -32,5 +33,6 @@
   "defaultProject": "tumed",
   "cli": {
     "packageManager": "npm"
-  }
+  },
+  "scripts": ["node_modules/jquery/dist/jquery.min.js"]
 }

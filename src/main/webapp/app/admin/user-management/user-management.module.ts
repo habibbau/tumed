@@ -7,9 +7,10 @@ import { UserManagementDetailComponent } from './user-management-detail.componen
 import { UserManagementUpdateComponent } from './user-management-update.component';
 import { UserManagementDeleteDialogComponent } from './user-management-delete-dialog.component';
 import { userManagementRoute } from './user-management.route';
+import { TumedSharedCommonModule } from '../../shared';
 
 @NgModule({
-  imports: [TumedSharedModule, RouterModule.forChild(userManagementRoute)],
+  imports: [TumedSharedModule, RouterModule.forChild(userManagementRoute), TumedSharedCommonModule],
   declarations: [
     UserManagementComponent,
     UserManagementDetailComponent,

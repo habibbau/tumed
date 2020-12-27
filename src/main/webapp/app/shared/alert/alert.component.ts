@@ -11,7 +11,7 @@ import { JhiAlertService, JhiAlert } from 'ng-jhipster';
     </div>
   </div>`,
 })
-export class AlertComponent implements OnInit, OnDestroy {
+export class JhiAlertComponent implements OnInit, OnDestroy {
   alerts: JhiAlert[] = [];
 
   constructor(private alertService: JhiAlertService) {}
